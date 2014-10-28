@@ -642,9 +642,22 @@ sub move_tab {
     ++$idx1 while $self->{tabs}[$idx1] != $tab;
     my $idx2 = ($idx1 + $direction) % @{ $self->{tabs} };
 
-    ($self->{tabs}[$idx1], $self->{tabs}[$idx2]) =
-      ($self->{tabs}[$idx2], $self->{tabs}[$idx1]);
-    $self->make_current ($self->{tabs}[$idx2]);
+	my $new_idx;
+	my $last_idx = $#{$self->{tabs}};
+    if ($idx1 == 0 and $direction == -1) {
+      (@{$self->{tabs}}[0 .. $last_idx])
+        = (@{$self->{tabs}}[1 .. $last_idx], $self->{tabs}[0]);
+      $new_idx = $last_idx;
+    } elsif ($idx1 == $last_idx and $direction == 1) {
+      (@{$self->{tabs}}[0 .. $last_idx])
+        = ($self->{tabs}[$last_idx], @{$self->{tabs}}[0 .. $last_idx-1]);
+      $new_idx = 0;
+    } else {
+      ($self->{tabs}[$idx1], $self->{tabs}[$idx2]) =
+        ($self->{tabs}[$idx2], $self->{tabs}[$idx1]);
+      $new_idx = $idx2;
+	}
+    $self->make_current ($self->{tabs}[$new_idx]);
   }
 
   ();
