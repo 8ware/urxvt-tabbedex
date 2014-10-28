@@ -94,6 +94,15 @@
 ##     Use the following in your ~/.Xdefaults to enable:
 ##     URXvt.tabbed.reopen-on-close: yes
 ##
+## Added by 8ware:
+##
+## 17. Closing a tab won't focus the last one anymore; instead the next one
+##     (i.e. on the right side) will be focussed - except the last one is
+##     closed.
+##
+## 18. Handling of special cases when moving a tab around, so first or last
+##     tab won't be swapped.
+##
 
 use Encode qw(decode);
 
