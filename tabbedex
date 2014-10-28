@@ -496,13 +496,17 @@ sub tab_destroy {
       $self->make_current ($self->{tabs}[-1]);
    }
 
+   my ($idx) = grep { $self->{tabs}[$_] == $tab } 0 .. $#{$self->{tabs}};
+   $idx -= 1 if $idx == $#{$self->{tabs}};
+
    $self->{tabs} = [ grep $_ != $tab, @{ $self->{tabs} } ];
    $self->update_autohide ();
 
    if (@{ $self->{tabs} }) {
       if ($self->{cur} == $tab) {
          delete $self->{cur};
-         $self->make_current ($self->{tabs}[-1]);
+#         $self->make_current ($self->{tabs}[-1]);
+         $self->make_current ($self->{tabs}[$idx]);
       } else {
          $self->refresh;
       }
